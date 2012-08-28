@@ -1,0 +1,12 @@
+name: WorldPlayerList
+main: org.Dragonphase.WorldPlayerList.WorldPlayerList
+version: 1.0
+description: >
+             WorldPlayerList shows all players in each world
+commands:
+  list:
+    description: Show online players in all worlds
+  wlist:
+    description: Show online players in all worlds
+  worldlist:
+    description: Show online players in all worlds
