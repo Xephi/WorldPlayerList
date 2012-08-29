@@ -4,6 +4,8 @@ version: 1.0
 description: >
              WorldPlayerList shows all players in each world
 commands:
+  wpl:
+    description: WorldPlayerList command
   list:
     description: Show online players in all worlds
   wlist:
