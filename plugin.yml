@@ -1,14 +1,14 @@
-name: WorldPlayerList
-main: org.Dragonphase.WorldPlayerList.WorldPlayerList
+name: PlayerList
+main: org.Dragonphase.PlayerList.PlayerList
 version: 1.0
 description: >
-             WorldPlayerList shows all players in each world
+             PlayerList lets you show all players in the server separated by ranks. You may also set colors for defined ranks
 commands:
-  wpl:
+  playerlist:
     description: WorldPlayerList command
   list:
     description: Show online players in all worlds
-  wlist:
+  plist:
     description: Show online players in all worlds
-  worldlist:
+  playerist:
     description: Show online players in all worlds

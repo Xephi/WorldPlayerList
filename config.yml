@@ -1,23 +1,22 @@
-# WorldPlayerList Configuration File
-#
-# This file is to be used to customise the list that is shown
-# when a player with permission node "worldlist.list" types /list, /worldlist or /wlist
-#
-# All color codes are supported, and wildcards are used for identifying player numbers
-# and world names:
-# Global player numbers (number of players in the server): %players
-# World player numbers (number of players in the specific world): %player
-# World name: %world
-#
-# global-players: This is where the messages for all players in the server are
-# defined
-# world-players: This is where the messages for players in specific worlds are
-# defined
+# PlayerList Configuration File
 
-WorldPlayerList:
+PlayerList:
   global-players:
     one-player: '&9There is &c%players &9player online.'
     more-players: '&9There are &c%players &9players online.'
-  world-players:
-    one-player: '&c%player &9player is in &c%world&9:'
-    more-players: '&c%player &9players are in &c%world&9:'
+  ranks:
+    Admin:
+      admin: '&4'
+    Moderator:
+      moderator: '&3'
+    Architect:
+      architect: '&a'
+    Trusted:
+      trusted: '&6'
+    Default:
+      default: '&7'
+    Donator:
+      ddefault: '&7'
+      dtrusted: '&6'
+      darchitect: '&a'
+      dmoderator: '&3'
