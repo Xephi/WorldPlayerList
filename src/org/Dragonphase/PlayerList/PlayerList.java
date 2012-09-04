@@ -1,5 +1,7 @@
 package org.Dragonphase.PlayerList;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import net.milkbowl.vault.permission.Permission;
@@ -16,6 +18,7 @@ public class PlayerList extends JavaPlugin{
 	public final Logger logger = Logger.getLogger("Minecraft");
 	public static PlayerList plugin;
 	public static Permission permission = null;
+	public static List<String> Handled = new ArrayList<String>();
 
     private boolean setupPermissions()
     {
@@ -53,10 +56,20 @@ public class PlayerList extends JavaPlugin{
 		return message;
 	}
 	
+	public void setHandled(String string){
+		if (Handled.contains(string)) return;
+		Handled.add(string);
+	}
+	
+	public boolean getHandled(String string){
+		if (Handled.contains(string)) return true;
+		return false;
+	}
+	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
 		String[] globalPlayers = {translateColor(getConfig().getString("PlayerList.global-players.one-player")), translateColor(getConfig().getString("PlayerList.global-players.more-players"))};
 		
-		if (commandLabel.equalsIgnoreCase("list") || commandLabel.equalsIgnoreCase("playerlist") || commandLabel.equalsIgnoreCase("plist")){
+		if (commandLabel.equalsIgnoreCase("list") || commandLabel.equalsIgnoreCase("plist")){
 			if (sender.hasPermission("playerlist.list")){
 				int playerNum = getServer().getOnlinePlayers().length;
 				if (playerNum == 1){
@@ -65,33 +78,43 @@ public class PlayerList extends JavaPlugin{
 					sender.sendMessage(globalPlayers[1].replace("%players", ""+playerNum));
 				}
 				
+				Handled.clear();
+				
 				for (String key : getConfig().getKeys(true)){
 					if (!key.contains("PlayerList.ranks.")) continue;
 					
+					int numPlayers = 0;
 					String displayRank = key.replace("PlayerList.ranks.", "");
+					String players = "  ";
+					
 					try{
 						displayRank = displayRank.substring(0, displayRank.indexOf("."));
-						String actualRank = key.replace("PlayerList.ranks." + displayRank + ".", "");
-						String rankTabColor = translateColor(getConfig().getString("PlayerList.ranks." + displayRank + "." + actualRank));
+						if (getHandled(displayRank)) continue;
+						String rankDisplayColor = translateColor(getConfig().getString("PlayerList.ranks." + displayRank + ".color"));
 						
-						String title = rankTabColor + displayRank + ChatColor.RESET;
-						String message = "  ";
-						int numPeople = 0;
-						
-						for (Player onlinePlayer : getServer().getOnlinePlayers()){
-							if (permission.getPrimaryGroup(onlinePlayer).equalsIgnoreCase(actualRank)){
-								numPeople ++;
-								message = message + rankTabColor + onlinePlayer.getName() + ChatColor.RESET + ", ";
+						for (String keys : getConfig().getKeys(true)){
+							if (!keys.contains("PlayerList.ranks." + displayRank + ".")) continue;
+							
+							String actualRank = keys.replace("PlayerList.ranks." + displayRank + ".", "");
+							String rankNameColor = translateColor(getConfig().getString("PlayerList.ranks." + displayRank + "." + actualRank));
+							
+							for (Player onlinePlayer : getServer().getOnlinePlayers()){
+								if (permission.getPrimaryGroup(onlinePlayer).equalsIgnoreCase(actualRank)){
+									numPlayers ++;
+									players = players + rankNameColor + onlinePlayer.getName() + ChatColor.RESET + ", ";
+								}
 							}
 						}
-						if (numPeople == 0) continue;
+
+						if (numPlayers == 0) continue;
 						
-						if (message.endsWith(", ")){
-							message = message.substring(0, message.length() - 2);
+						if (players.endsWith(", ")){
+							players = players.substring(0, players.length() - 2);
 						}
 						
-						sender.sendMessage(title + ":");
-						sender.sendMessage(message);
+						sender.sendMessage(rankDisplayColor + displayRank + ChatColor.RESET + ":");
+						sender.sendMessage(players);
+						setHandled(displayRank);
 						
 					}catch (Exception ex){
 						continue;

@@ -36,9 +36,13 @@ public class PlayerListener implements Listener{
 				String rankTabColor = translateColor(plugin.getConfig().getString("PlayerList.ranks." + displayRank + "." + actualRank));
 
 				if (PlayerList.permission.getPrimaryGroup(player).equalsIgnoreCase(actualRank)){
-					player.setPlayerListName(rankTabColor + player.getName());
+					String tabName = rankTabColor + player.getName();
+					player.setPlayerListName(tabName.substring(0, 14) + ChatColor.RESET);
+				}
+				else{
 				}
 			}catch (Exception ex){
+				logger.info(ex.getMessage());
 				continue;
 			}
 		}

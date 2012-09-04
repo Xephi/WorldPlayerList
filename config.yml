@@ -6,16 +6,22 @@ PlayerList:
     more-players: '&9There are &c%players &9players online.'
   ranks:
     Admin:
+      color: '&4'
       admin: '&4'
     Moderator:
+      color: '&3'
       moderator: '&3'
     Architect:
+      color: '&a'
       architect: '&a'
     Trusted:
+      color: '&6'
       trusted: '&6'
     Default:
+      color: '&7'
       default: '&7'
     Donator:
+      color: '&e'
       ddefault: '&7'
       dtrusted: '&6'
       darchitect: '&a'
