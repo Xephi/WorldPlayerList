@@ -85,7 +85,7 @@ public class PlayerList extends JavaPlugin{
 					
 					int numPlayers = 0;
 					String displayRank = key.replace("PlayerList.ranks.", "");
-					String players = "  ";
+					String players = "";
 					
 					try{
 						displayRank = displayRank.substring(0, displayRank.indexOf("."));
@@ -101,7 +101,11 @@ public class PlayerList extends JavaPlugin{
 							for (Player onlinePlayer : getServer().getOnlinePlayers()){
 								if (permission.getPrimaryGroup(onlinePlayer).equalsIgnoreCase(actualRank)){
 									numPlayers ++;
-									players = players + rankNameColor + onlinePlayer.getName() + ChatColor.RESET + ", ";
+									if (getConfig().getBoolean("PlayerList.use-displayname")){
+										players = players + onlinePlayer.getDisplayName() + ChatColor.RESET + ", ";
+									}else{
+										players = players + rankNameColor + onlinePlayer.getName() + ChatColor.RESET + ", ";
+									}
 								}
 							}
 						}
@@ -111,9 +115,13 @@ public class PlayerList extends JavaPlugin{
 						if (players.endsWith(", ")){
 							players = players.substring(0, players.length() - 2);
 						}
-						
-						sender.sendMessage(rankDisplayColor + displayRank + ChatColor.RESET + ":");
-						sender.sendMessage(players);
+
+						if (getConfig().getBoolean("PlayerList.show-on-same-line")){
+							sender.sendMessage(rankDisplayColor + displayRank + ChatColor.RESET + " (" + numPlayers + "): " + players);
+						}else{
+							sender.sendMessage(rankDisplayColor + displayRank + ChatColor.RESET + " (" + numPlayers + "):");
+							sender.sendMessage(players);
+						}
 						setHandled(displayRank);
 						
 					}catch (Exception ex){

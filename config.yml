@@ -4,6 +4,8 @@ PlayerList:
   global-players:
     one-player: '&9There is &c%players &9player online.'
     more-players: '&9There are &c%players &9players online.'
+  use-displayname: true
+  show-on-same-line: true
   ranks:
     Admin:
       color: '&4'

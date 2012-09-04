@@ -37,12 +37,15 @@ public class PlayerListener implements Listener{
 
 				if (PlayerList.permission.getPrimaryGroup(player).equalsIgnoreCase(actualRank)){
 					String tabName = rankTabColor + player.getName();
-					player.setPlayerListName(tabName.substring(0, 14) + ChatColor.RESET);
+					if ((tabName + ChatColor.RESET).length() > 16){
+						player.setPlayerListName(tabName.substring(0, 14) + ChatColor.RESET);
+					}else{
+						player.setPlayerListName(tabName + ChatColor.RESET);
+					}
 				}
 				else{
 				}
 			}catch (Exception ex){
-				logger.info(ex.getMessage());
 				continue;
 			}
 		}
