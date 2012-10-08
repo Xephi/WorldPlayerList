@@ -1,5 +1,6 @@
 package org.Dragonphase.PlayerList;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -47,8 +48,12 @@ public class PlayerList extends JavaPlugin{
 			logger.info(ChatColor.GREEN + "Vault is installed. Continuing");
 			setupPermissions();
 		}
-		getConfig().options().copyDefaults(true);
-		saveDefaultConfig();
+		if(!new File(getDataFolder()+File.separator+"config.yml").exists()){
+			getConfig().options().copyDefaults(true);
+			saveDefaultConfig();
+		}
+		getConfig();
+		saveConfig();
 	}
 	
 	public String translateColor(String message){
